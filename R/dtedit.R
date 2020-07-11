@@ -176,17 +176,21 @@ dtedit <- function(input, output,
 #' @param label.edit the label of the edit button.
 #' @param label.add the label of the add button.
 #' @param label.copy the label of the copy button.
+#' @param label.extra the label of the extra button.
 #' @param label.save the label of the save button.
 #' @param label.cancel the label of the cancel button.
 #' @param icon.delete the icon for the delete button, e.g. \code{icon("trash")}. Defaults to \code{NULL}.
 #' @param icon.edit the icon for the edit button, e.g. \code{icon("edit")}. Defaults to \code{NULL}.
 #' @param icon.add the icon for the add button, e.g. \code{icon("plus")}. Defaults to \code{NULL}.
 #' @param icon.copy the icon for the copy button, e.g. \code{icon("copy")}. Defaults to \code{NULL}.
+#' @param icon.extra the icon for the extra button, e.g. \code{icon("sync")}. Defaults to \code{NULL}.
 #' @param text.delete.modal the text shown in the delete modal dialog.
 #' @param show.delete whether to show/enable the delete button.
 #' @param show.update whether to show/enable the update button.
 #' @param show.insert whether to show/enable the insert button.
 #' @param show.copy whether to show/enable the copy button.
+#' @param show.extra whether to show/enable an extra button with onclick event
+#' @param onclick.extra character, the javascript that is executed when the extra button is clicked
 #' @param callback.delete a function called when the user deletes a row.
 #'  This function should return an updated data.frame.
 #' @param callback.update a function called when the user updates a row.
@@ -277,18 +281,22 @@ dteditmod <- function(input, output, session,
                       label.edit = "Edit",
                       label.add = "New",
                       label.copy = "Copy",
+                      label.extra = "",
                       label.save = "Save",
                       label.cancel = "Cancel",
                       icon.delete = NULL,
                       icon.edit = NULL,
                       icon.add = NULL,
                       icon.copy = NULL,
+                      icon.extra = NULL,
                       text.delete.modal =
                         "Are you sure you want to delete this record?",
                       show.delete = TRUE,
                       show.update = TRUE,
                       show.insert = TRUE,
                       show.copy = TRUE,
+                      show.extra = FALSE,
+                      onclick.extra = NULL,
                       callback.delete = function(data, row) { },
                       callback.update = function(data, olddata, row) { },
                       callback.insert = function(data, row) { },
@@ -1136,6 +1144,11 @@ dteditmod <- function(input, output, session,
       if (show.copy) {
         shiny::actionButton(
           ns(paste0(name, "_copy")), label.copy, icon = icon.copy
+        )
+      },
+      if (show.extra) {
+        shiny::actionButton(
+          ns(paste0(name, "_extra")), label.extra, icon = icon.extra, onclick = onclick.extra
         )
       },
       shiny::br(), shiny::br(), DT::dataTableOutput(ns(DataTableName))
