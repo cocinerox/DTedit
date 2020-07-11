@@ -23,6 +23,7 @@ Depends:
 Imports: 
     DT (>= 0.6),
     shiny,
+    shinyjs,
     blob,
     methods
 Suggests: 

@@ -741,6 +741,21 @@ dteditmod <- function(input, output, session,
     DT::replaceData(proxy, addActionButtons(data, action.buttons)$data, ...)
   }
 
+  ##### Enable/disable buttons ###############################################
+
+  observe({
+    row <- input[[paste0(name, "dt_rows_selected")]]
+    if (!is.null(row) && row > 0) {
+      if (show.update) shinyjs::enable(paste0(name, "_edit"))
+      if (show.delete) shinyjs::enable(paste0(name, "_remove"))
+      if (show.copy)   shinyjs::enable(paste0(name, "_copy"))
+    } else {
+      if (show.update) shinyjs::disable(paste0(name, "_edit"))
+      if (show.delete) shinyjs::disable(paste0(name, "_remove"))
+      if (show.copy)   shinyjs::disable(paste0(name, "_copy"))
+    }
+  })
+
   ##### Insert functions #####################################################
 
   observeEvent(input[[paste0(name, "_add")]], {
